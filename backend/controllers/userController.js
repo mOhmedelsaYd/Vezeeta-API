@@ -79,10 +79,10 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const user = await User.findByIdAndUpdate(id, { deletedAt: new Date() }, { new: true });
+        const user = await User.findByIdAndDelete(id);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        res.json({ message: 'User deleted (soft delete) successfully', user });
+        res.json({ message: 'User deleted successfully', user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
