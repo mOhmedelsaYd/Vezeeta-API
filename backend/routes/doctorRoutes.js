@@ -1,15 +1,23 @@
 const express = require('express');
-const { createDoctor, getAllDoctors, updateDoctor, deleteDoctor } = require('../controllers/doctorController');
-const { verifyToken, isAdmin } = require('../middlewares/authMiddleware');
-
 const router = express.Router();
+const {
+  getDoctors,
+  createDoctor,
+  updateDoctor,
+    deleteDoctor,
+    getDoctorProfile,
+    searchDoctors,
+} = require('../controllers/doctorController');
 
-// كل المسارات دي محمية ومفتوحة للأدمن فقط
-router.use(verifyToken, isAdmin);
+const { verifyToken, allowedTo } = require('../middlewares/authMiddleware')
 
-router.post('/create', createDoctor);        // إنشاء طبيب جديد
-router.get('/all', getAllDoctors);           // عرض كل الأطباء
-router.put('/update/:id', updateDoctor);     // تحديث بيانات طبيب
-router.delete('/delete/:id', deleteDoctor);  // حذف طبيب
+router.use(verifyToken);
+
+router.get('/',  allowedTo('Admin'), getDoctors);
+router.get('/getDoctorsInfo',  allowedTo('Patient'), getDoctorProfile);
+router.post('/create', allowedTo('Admin'), createDoctor);
+router.put('/update/:id', allowedTo('Admin'), updateDoctor);
+router.delete('/delete/:id', allowedTo('Admin'), deleteDoctor);
+
 
 module.exports = router;

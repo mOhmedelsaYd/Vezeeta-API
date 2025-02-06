@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyToken, isAdmin, isUser } = require('../middlewares/authMiddleware')
+const { verifyToken, allowedTo } = require('../middlewares/authMiddleware')
 const router = express.Router();
 const {
   getAppointments,
@@ -11,9 +11,9 @@ const {
 
 router.use(verifyToken);
 
-router.route("/").get(isAdmin, getAppointments).post(isUser, createAppointment);
-router.route('/confirm').post(isUser, confirmAppointment)
+router.route("/").get(allowedTo('Admin'), getAppointments).post(allowedTo('Patient'), createAppointment);
+router.route('/confirm').post(allowedTo('Patient'), confirmAppointment)
 
-router.route("/:id").put(isAdmin, updateAppointment).delete(isAdmin, deleteAppointment);
+router.route("/:id").put(allowedTo('Admin'), updateAppointment).delete(allowedTo('Admin'), deleteAppointment);
 
 module.exports = router;

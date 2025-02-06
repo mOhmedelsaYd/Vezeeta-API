@@ -25,17 +25,11 @@ exports.verifyToken = (req, res, next) => {
   }
 };
 
-// ✅ التحقق من صلاحيات الأدمن
-exports.isAdmin = (req, res, next) => {
-  if (req.user.role !== 'Admin') {
-    return res.status(403).json({ message: 'Access denied. Admins only.' });
-  }
-  next();
-};
-// ✅ التحقق من صلاحيات اليوزر
-exports.isUser = (req, res, next) => {
-  if (req.user.role !== 'Patient') {
-    return res.status(403).json({ message: 'Access denied. Patient only.' });
-  }
-  next();
-};
+exports.allowedTo = (...roles) => 
+    async (req, res, next) => {
+        //1- check user role
+        if (!(roles.includes(req.user.role)))
+            return res.status(403).json({ error: "You have no permission to perform this action" });
+
+        next();
+    }
