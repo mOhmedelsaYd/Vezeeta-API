@@ -27,7 +27,7 @@ Vezeeta-API is a modern API designed to handle various functionalities related t
    ```
 2. Navigate to the project directory:
    ```bash
-   cd Vezeeta-API
+   cd backend
    ```
 3. Install the dependencies:
    ```bash
@@ -38,10 +38,6 @@ Vezeeta-API is a modern API designed to handle various functionalities related t
 1. Start the development server:
    ```bash
    npm run dev
-   ```
-2. Start the production server:
-   ```bash
-   npm run start
    ```
 
 ## Contributing
