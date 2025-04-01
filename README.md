@@ -1,6 +1,4 @@
-It seems that the `README.md` file is not available in the `Vezeeta-API` repository. You can create a new `README.md` file to describe your project. Here is a template you can use:
 
-```markdown
 # Vezeeta-API
 
 ## Description
